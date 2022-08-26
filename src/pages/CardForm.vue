@@ -1,6 +1,7 @@
 <template>
   <div class="page-bg">
-    <img class="mobile-bg" src="../assets/bg-main-mobile.png">
+    <img class="mobile-bg block lg:hidden" src="../assets/bg-main-mobile.png" alt="bg-main-mobile">
+    <img class="large-bg hidden lg:block" src="../assets/bg-main-desktop.png" alt="bg-main">
   </div>
   <div class="page-container">
     <section class="cards-container flex-grow">
@@ -34,7 +35,7 @@
 
     </section>
 
-    <section class="form-container flex-grow">
+    <section class="form-container flex-grow" v-show="!formComplete">
       <form class="card-form">
         <div class="card-form-item mb-4">
           <label class="mb-2 uppercase">Cardholder Name</label>
@@ -69,9 +70,19 @@
             </div>
             <span :class="['req-warning', error.wrongCVC? 'visible': 'invisible']">Can't be blank</span>
           </div>
-          <button v-on:click="confirmValidation" class="form-submit mt-1 col-span-4">Confirm</button>
+          <button type="button" v-on:click="confirmValidation" class="form-submit mt-1 col-span-4">Confirm</button>
         </div>
       </form>
+    </section>
+    <section v-show="formComplete" class="form-container flex-grow">
+      <div class="card-form">
+        <div class="flex flex-row items-center justify-center mb-8">
+          <img src="../assets/icon-complete.svg" alt="complete icon">
+        </div>
+        <h1 class="text-2xl text-center mb-4 tracking-widest uppercase">Thank you!</h1>
+        <p class="text-violet tracking-wide text-center mb-12">We've added your card details</p>
+        <button v-on:click="continueFormBtn" class="form-submit mt-1 col-span-4">Continue</button>
+      </div>
     </section>
   </div>
 </template>
@@ -91,6 +102,7 @@ export default {
       dateM: null,
       dateY: null,
       cardCVC: null,
+      formComplete: false,
       error: {
         noNameInput: false,
         noNumberInput: false,
@@ -105,6 +117,9 @@ export default {
     }
   },
   methods:{
+    continueFormBtn(){
+      this.formComplete = false;
+    },
     setCardholderName(target){
       let val = target.value;
       this.cardholderName = val;
@@ -157,22 +172,31 @@ export default {
       this.error.wrongCVC = false;
     },
     confirmValidation(){
+      let confirm = true;
       if(this.cardholderName == null){
         this.error.noNameInput = true;
+        confirm = false;
       }
       if(this.cardNumber == null){
         this.error.noNumberInput = true;
+        confirm = false;
       }
       if(this.dateM == null){
         this.error.wrongDate.month = true;
+        confirm = false;
       }
       if(this.dateY == null){
         this.error.wrongDate.year = true;
+        confirm = false;
       }
       if(this.cardCVC == null){
         this.error.wrongCVC = true;
+        confirm = false;
       }
-      return null;
+
+      if(confirm === true){
+        this.formComplete = true;
+      }
     }
   },
   computed: {
@@ -256,6 +280,9 @@ export default {
   @apply fixed h-[35%] w-full bg-cover -z-10 lg:h-full lg:w-[34%] xl:w-[24%];
 }
 .mobile-bg{
+  @apply w-full h-full bg-cover -z-10;
+}
+.large-bg{
   @apply w-full h-full bg-cover -z-10;
 }
 .page-container{
