@@ -31,7 +31,6 @@ input:hover{
 
 input:focus-visible{
     @apply border-none rounded-md;
-    background-image:  linear-gradient(to right, #6448FEFF, #600594FF);
     background-origin: border-box;
     background-clip: content-box, border-box;
     box-shadow: 2px 1000px 1px #fff inset;
@@ -41,13 +40,12 @@ input:focus-visible{
 .input-border{
     @apply container relative w-full rounded-md;
 }
+
 .input-border::before{
     content: "";
     @apply absolute top-0 bottom-0 left-0 right-0 bg-white border-0 rounded-[0.43em];
     top: 0; right: 0; bottom: 0; left: 0;
     z-index: -1;
-}
-.input-border::before{
     background: linear-gradient(to right, #6448FEFF, #600594FF);
 }
 
