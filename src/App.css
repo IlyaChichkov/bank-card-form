@@ -21,7 +21,38 @@ body{
 }
 
 input{
-    @apply bg-white border-solid border-1 border-light-violet rounded-md p-3 font-sans font-medium;
+    @apply w-full h-full bg-white border-solid border-1 border-light-violet rounded-md
+    p-3 font-sans font-medium outline-none;
+}
+
+input:hover{
+    @apply border-violet;
+}
+
+input:focus-visible{
+    @apply border-none rounded-md;
+    background-image:  linear-gradient(to right, #6448FEFF, #600594FF);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    box-shadow: 2px 1000px 1px #fff inset;
+    border: solid 1px transparent;
+}
+
+.input-border{
+    @apply container relative w-full rounded-md;
+}
+.input-border::before{
+    content: "";
+    @apply absolute top-0 bottom-0 left-0 right-0 bg-white border-0 rounded-[0.43em];
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1;
+}
+.input-border::before{
+    background: linear-gradient(to right, #6448FEFF, #600594FF);
+}
+
+input.error{
+    @apply border-solid border-1 border-red;
 }
 
 select{
@@ -30,4 +61,50 @@ select{
 
 button, [type='submit']{
     @apply bg-dark-violet text-white rounded-lg py-3;
+}
+
+button:hover{
+    @apply opacity-95;
+}
+
+.form-submit{
+    @apply relative bg-dark-violet text-center text-white rounded-lg py-4 overflow-hidden;
+}
+
+.form-submit:hover{
+    @apply drop-shadow-[3px_3px_5px_rgba(0,20,50,0.25)] shadow-black;
+}
+
+.form-submit::before{
+    content: "";
+    @apply absolute bg-white w-[254px] h-[93px] top-0 bottom-0 left-[-63%] rotate-45 opacity-25 drop-shadow-md;
+    transition: all 560ms ease-in-out;
+}
+
+.form-submit:hover::before{
+    @apply left-[100%];
+}
+
+button:active::before{
+    @apply absolute h-[124px] w-[25px] -z-10;
+}
+
+.card-form-item label{
+    transition: all 0.4s ease-in-out;
+}
+
+.card-form-item:hover label{
+    transform: translateY(-12%);
+}
+
+@keyframes uk-scale-up {
+    from {
+        scale: initial;
+    }
+    to{
+        transform: scale(1.1);
+    }
+}
+*, *::before, *::after {
+    box-sizing: border-box;
 }

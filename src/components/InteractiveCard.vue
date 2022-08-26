@@ -38,25 +38,25 @@
       <form class="card-form mt-12">
         <div class="card-form-item mb-4">
           <label class="mb-2 uppercase">Cardholder Name</label>
-          <input v-on:input.prevent="setCardholderName($event.target)" placeholder="e. g. Jane Appleseed" required>
+          <input :class="[error.noNameInput? 'error': '']" v-on:input.prevent="setCardholderName($event.target)" placeholder="e. g. Jane Appleseed" required>
         </div>
         <div class="card-form-item">
           <label class="mb-2 uppercase">Card Number</label>
-          <input v-on:input.prevent="setCardNum($event.target)" placeholder="e. g. 1234 5678 9123 0000" required maxlength="19">
+          <input :class="[error.noNumberInput || error.wrongNumber? 'error': '']" v-on:input.prevent="setCardNum($event.target)" placeholder="e. g. 1234 5678 9123 0000" required maxlength="19">
           <span :class="['req-warning', error.wrongNumber? 'visible': 'invisible']">Wrong format, numbers only</span>
         </div>
         <div class="grid grid-cols-4 gap-3 mt-4">
           <div class="card-form-item col-span-2">
             <label class="mb-2 uppercase">Exp. Date (MM/YY)</label>
             <div class="grid grid-cols-2 gap-2">
-              <input v-on:input.prevent="setMonth($event.target)" type="text" placeholder="MM" required maxlength="3" min="0" max="99">
-              <input v-on:input.prevent="setYear($event.target)" type="text" placeholder="YY" required maxlength="3" min="0" max="99">
+              <input :class="[error.wrongDate.month? 'error': '']" v-on:input.prevent="setMonth($event.target)" type="text" placeholder="MM" required maxlength="3" min="0" max="99">
+              <input :class="[error.wrongDate.year? 'error': '']" v-on:input.prevent="setYear($event.target)" type="text" placeholder="YY" required maxlength="3" min="0" max="99">
             </div>
             <span :class="['req-warning', error.wrongDate.month || error.wrongDate.year? 'visible': 'invisible']">Can't be blank</span>
           </div>
           <div class="card-form-item col-span-2">
             <label class="mb-2 uppercase">CVC</label>
-            <input v-on:input.prevent="setCVC($event.target.value)" v-model="cardCVC" placeholder="e. g. 123" required maxlength="3">
+            <input :class="[error.wrongCVC? 'error': '']" v-on:input.prevent="setCVC($event.target.value)" v-model="cardCVC" placeholder="e. g. 123" required maxlength="3">
             <span :class="['req-warning', error.wrongCVC? 'visible': 'invisible']">Can't be blank</span>
           </div>
           <button v-on:click="confirmValidation" class="mt-1 col-span-4">Confirm</button>
@@ -82,6 +82,8 @@ export default {
       dateY: null,
       cardCVC: null,
       error: {
+        noNameInput: false,
+        noNumberInput: false,
         wrongName: false,
         wrongNumber: false,
         wrongDate: {
@@ -96,6 +98,7 @@ export default {
     setCardholderName(target){
       let val = target.value;
       this.cardholderName = val;
+      this.error.noNameInput = false;
       target.value = this.getName;
     },
     setCardNum(target){
@@ -107,6 +110,7 @@ export default {
       }
       val = val.toString().replaceAll(' ', '');
       this.cardNumber = val;
+      this.error.noNumberInput = false;
       target.value = this.getCardNum;
     },
     setMonth(target){
@@ -135,6 +139,7 @@ export default {
         val = 99;
       }
       this.dateY = Number(val);
+      this.error.wrongDate.year = false;
       target.value = this.getYear;
     },
     setCVC(val){
@@ -142,8 +147,17 @@ export default {
       this.error.wrongCVC = false;
     },
     confirmValidation(){
+      if(this.cardholderName == null){
+        this.error.noNameInput = true;
+      }
+      if(this.cardNumber == null){
+        this.error.noNumberInput = true;
+      }
       if(this.dateM == null){
         this.error.wrongDate.month = true;
+      }
+      if(this.dateY == null){
+        this.error.wrongDate.year = true;
       }
       if(this.cardCVC == null){
         this.error.wrongCVC = true;
