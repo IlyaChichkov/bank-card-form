@@ -1,27 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <InteractiveCard/>
+  <!--<CardForm/>-->
 </template>
 
 <script lang="ts">
+import './App.css'
 import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import CardForm from "@/pages/CardForm.vue";
+import InteractiveCard from "@/components/InteractiveCard.vue";
 
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld
+    InteractiveCard,
+    // eslint-disable-next-line vue/no-unused-components
+    CardForm
   }
 });
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>

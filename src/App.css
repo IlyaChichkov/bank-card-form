@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500');
+
+h1, h2, h3, p, span, label {
+    @apply font-sans font-medium text-dark-violet text-lg;
+}
+
+p{
+
+}
+
+body{
+    @apply h-screen min-w-[595px];
+}
+
+#app{
+    @apply h-full;
+}
+
+input{
+    @apply bg-white border-solid border-1 border-light-violet rounded-md p-3 font-sans font-medium;
+}
+
+button, [type='submit']{
+    @apply bg-dark-violet text-white rounded-lg py-3;
+}
