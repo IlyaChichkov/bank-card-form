@@ -30,6 +30,10 @@
           <div class="card-form-item col-span-2">
             <label class="uppercase">Exp. Date (MM/YY)</label>
             <div class="grid grid-cols-2 gap-2">
+              <select name="Mounth" required>
+                <option value="mm" disabled selected>MM</option>
+                <option v-for="n in 12" v-bind:key="n" value="01">{{n}}</option>
+              </select>
               <input type="number" placeholder="MM" required maxlength="2" min="1" max="31">
               <input type="number" placeholder="YY" required maxlength="2" min="0" max="99">
             </div>

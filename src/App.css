@@ -13,14 +13,18 @@ p{
 }
 
 body{
-    @apply h-screen min-w-[595px];
+    @apply min-h-screen min-w-[595px];
 }
 
 #app{
-    @apply h-full;
+    @apply min-h-screen h-screen;
 }
 
 input{
+    @apply bg-white border-solid border-1 border-light-violet rounded-md p-3 font-sans font-medium;
+}
+
+select{
     @apply bg-white border-solid border-1 border-light-violet rounded-md p-3 font-sans font-medium;
 }
 
